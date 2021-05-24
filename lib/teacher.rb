@@ -13,6 +13,4 @@ class Teacher
     true
   end
 end
-
-# timeslot es un array de hashes: {timeslot_id: timeslot_id, allocated: false}
-# agregar a tests!
+# agregar test de timeslots

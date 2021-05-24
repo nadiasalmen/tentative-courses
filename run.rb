@@ -3,6 +3,7 @@
 require_relative 'lib/student.rb'
 require_relative 'lib/teacher.rb'
 require_relative 'lib/timeslot.rb'
+require_relative 'lib/tentative_course.rb'
 
 # Timeslots:
 timeslot_list = Timeslot.build_unique_timeslots

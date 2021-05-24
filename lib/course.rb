@@ -12,15 +12,15 @@ class Course
     @students = attributes[:students]
   end
 
-  def validate_teacher
+  def valid_teacher?
     @teacher.teacher?
   end
 
-  def validate_student
+  def valid_student_list?
     @students.each(&student?)
   end
 
-  def validate_timeslot
+  def valid_timeslot?
     @timeslot.timeslot?
   end
 end
