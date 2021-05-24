@@ -2,6 +2,9 @@
 
 require_relative '../lib/student'
 
+VALID_DELIVERY_MODES = %w[Individual Group].freeze
+VALID_LEVELS = %w[Beginner Pre-Intermediate Intermediate Upper-Intermediate Advanced].freeze
+
 shared_context 'student instances' do
   before do
     @student = Student.new(
@@ -14,12 +17,12 @@ end
 describe Student do
   include_context 'student instances'
 
-  it 'has a delivery_mode' do
-    expect(@student.delivery_mode).to eq('Individual')
+  it 'has a valid delivery_mode' do
+    expect(VALID_DELIVERY_MODES).to include(@student.delivery_mode)
   end
 
-  it 'has a level' do
-    expect(@student.level).to eq('Beginner')
+  it 'has a valid level' do
+    expect(VALID_LEVELS).to include(@student.level)
   end
 
   it 'raises InvalidValue if delivery_mode is wrong' do
