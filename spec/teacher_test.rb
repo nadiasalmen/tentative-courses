@@ -7,12 +7,18 @@ TIMESLOTS = Timeslot.build_unique_timeslots
 
 shared_context 'teacher instances' do
   before do
-    @teacher = Teacher.new(
-      teacher_id: 0,
-      timeslots: [{ timeslot: TIMESLOTS[0], allocated: false },
-                  { timeslot: TIMESLOTS[1], allocated: false },
-                  { timeslot: TIMESLOTS[2], allocated: false }]
-    )
+    # Create teachers:
+    @teacher_list = []
+    teacher_count = 1
+
+    10.times do
+      timeslots = []
+      rand(1..25).times do
+        timeslots << { timeslot: TIMESLOTS.sample, allocated: false }
+      end
+      @teacher_list << Teacher.new(teacher_id: teacher_count, timeslots: timeslots.uniq)
+      teacher_count += 1
+    end
   end
 end
 
@@ -20,10 +26,10 @@ describe Teacher do
   include_context 'teacher instances'
 
   it 'has valid timeslots' do
-    expect(@teacher.timeslots[0][:timeslot].day).to eq('Monday')
-    expect(@teacher.timeslots[0][:timeslot].time).to eq(9)
-    expect(@teacher).to respond_to :timeslots
-    expect(@teacher.timeslots).to all(be_a Hash)
-    expect(@teacher.timeslots[0][:timeslot]).to be_a Timeslot
+    expect(@teacher_list).to all(respond_to :timeslots)
+    @teacher_list.each do |teacher|
+      expect(teacher.timeslots).to all(be_a Hash)
+      expect(teacher.timeslots[0][:timeslot]).to be_a Timeslot
+    end
   end
 end

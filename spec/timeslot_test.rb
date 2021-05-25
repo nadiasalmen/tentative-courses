@@ -7,10 +7,7 @@ VALID_TIMES = (9..19).to_a
 
 shared_context 'timeslots instances' do
   before do
-    @timeslot = Timeslot.new(
-      day: 'Monday',
-      time: 19
-    )
+    @timeslot_list = Timeslot.build_unique_timeslots
   end
 end
 
@@ -18,15 +15,19 @@ describe Timeslot do
   include_context 'timeslots instances'
 
   it 'has a valid day' do
-    expect(@timeslot).to respond_to :day
-    expect(@timeslot.day).to be_a String
-    expect(VALID_DAYS).to include(@timeslot.day)
+    expect(@timeslot_list).to all(respond_to :day)
+    @timeslot_list.each do |timeslot|
+      expect(timeslot.day).to be_a String
+      expect(VALID_DAYS).to include(timeslot.day)
+    end
   end
 
   it 'has a valid time' do
-    expect(@timeslot).to respond_to :time
-    expect(@timeslot.time).to be_a Integer
-    expect(VALID_TIMES).to include(@timeslot.time)
+    expect(@timeslot_list).to all(respond_to :time)
+    @timeslot_list.each do |timeslot|
+      expect(timeslot.time).to be_a Integer
+      expect(VALID_TIMES).to include(timeslot.time)
+    end
   end
 
   it 'raises InvalidValue if day is wrong' do

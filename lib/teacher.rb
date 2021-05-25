@@ -13,4 +13,3 @@ class Teacher
     true
   end
 end
-# agregar test de timeslots
