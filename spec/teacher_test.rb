@@ -19,8 +19,11 @@ end
 describe Teacher do
   include_context 'teacher instances'
 
-  it 'has a valid timeslot' do
+  it 'has valid timeslots' do
     expect(@teacher.timeslots[0][:timeslot].day).to eq('Monday')
     expect(@teacher.timeslots[0][:timeslot].time).to eq(9)
+    expect(@teacher).to respond_to :timeslots
+    expect(@teacher.timeslots).to all(be_a Hash)
+    expect(@teacher.timeslots[0][:timeslot]).to be_a Timeslot
   end
 end

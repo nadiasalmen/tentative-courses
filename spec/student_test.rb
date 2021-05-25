@@ -21,15 +21,21 @@ end
 describe Student do
   include_context 'student instances'
 
-  it 'has a valid delivery_mode' do
+  it 'should have a valid delivery mode' do
+    expect(@student).to respond_to :delivery_mode
+    expect(@student.delivery_mode).to be_a String
     expect(VALID_DELIVERY_MODES).to include(@student.delivery_mode)
   end
 
-  it 'has a valid level' do
+  it 'should have a valid level' do
+    expect(@student).to respond_to :level
+    expect(@student.level).to be_a String
     expect(VALID_LEVELS).to include(@student.level)
   end
 
-  it 'has a valid timeslot' do
+  it 'has valid timeslots' do
+    expect(@student).to respond_to :timeslots
+    expect(@student.timeslots).to all(be_a Timeslot)
     expect(TIMESLOTS).to include(*@student.timeslots)
   end
 
