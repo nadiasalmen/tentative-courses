@@ -10,8 +10,10 @@ class Student
   VALID_LEVELS = %w[Beginner Pre-Intermediate Intermediate Upper-Intermediate Advanced].freeze
 
   def initialize(attributes = {})
-    raise InvalidValue unless VALID_DELIVERY_MODES.include?(attributes[:delivery_mode])
-    raise InvalidValue unless VALID_LEVELS.include?(attributes[:level])
+    unless VALID_DELIVERY_MODES.include?(attributes[:delivery_mode])
+      raise InvalidValue, "#{attributes[:delivery_mode]} is not a valid delivery mode."
+    end
+    raise InvalidValue, "#{attributes[:level]} is not a valid level." unless VALID_LEVELS.include?(attributes[:level])
 
     @student_id = attributes[:student_id]
     @delivery_mode = attributes[:delivery_mode]
@@ -27,5 +29,4 @@ class Student
   def allocate
     @allocated = true
   end
-  # Each timeslot should be a Timeslot instance -- add check
 end

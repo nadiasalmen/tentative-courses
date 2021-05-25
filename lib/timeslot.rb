@@ -7,12 +7,16 @@ class Timeslot
   VALID_DAYS = %w[Monday Tuesday Wednesday Thursday Friday].freeze
   VALID_TIMES = (9..19).to_a
 
-  attr_reader :timeslot_id
+  attr_reader :timeslot_id, :day, :time
   attr_accessor :available_teachers
 
   def initialize(attributes = {})
-    raise InvalidValue unless VALID_DAYS.include?(attributes[:day])
-    raise InvalidValue unless VALID_TIMES.include?(attributes[:time])
+    unless VALID_DAYS.include?(attributes[:day])
+      raise InvalidValue, "#{attributes[:day]} is not a valid day."
+    end
+    unless VALID_TIMES.include?(attributes[:time])
+      raise InvalidValue, "#{attributes[:time]} is not a valid time."
+    end
 
     @timeslot_id = attributes[:timeslot_id]
     @day = attributes[:day]
