@@ -12,15 +12,13 @@ class Course
     @students = attributes[:students]
   end
 
-  def valid_teacher?
-    @teacher.teacher?
-  end
-
-  def valid_student_list?
-    @students.each(&student?)
-  end
-
-  def valid_timeslot?
-    @timeslot.timeslot?
+  def to_s
+    str = <<DESC
+    Day: #{@timeslot.day} - Time: #{@timeslot.time}
+    Level: #{@delivery_mode} - Delivery Mode: #{@delivery_mode}
+    Teacher: #{@teacher.teacher_id}
+    Students: #{@students.collect(&:student_id)}
+DESC
+    str
   end
 end

@@ -36,10 +36,6 @@ class Timeslot
     timeslots
   end
 
-  def valid_timeslot?(timeslot)
-    Timeslot.build_unique_timeslots.include?(timeslot)
-  end
-
   def timeslot?
     true
   end
