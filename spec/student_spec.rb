@@ -5,7 +5,6 @@ require_relative '../lib/timeslot'
 
 VALID_DELIVERY_MODES = %w[Individual Group].freeze
 VALID_LEVELS = %w[Beginner Pre-Intermediate Intermediate Upper-Intermediate Advanced].freeze
-TIMESLOTS = Timeslot.build_unique_timeslots
 
 shared_context 'student instances' do
   before do
@@ -148,24 +147,33 @@ end
 describe Student do
   include_context 'student instances'
 
-  it 'should have a valid delivery mode' do
+  it 'should have a delivery mode' do
     expect(@student_list).to all(respond_to :delivery_mode)
+  end
+
+  it 'its delivery mode should be one of: Group or Individual' do
     @student_list.each do |student|
       expect(student.delivery_mode).to be_a String
       expect(VALID_DELIVERY_MODES).to include(student.delivery_mode)
     end
   end
 
-  it 'should have a valid level' do
+  it 'should have a level' do
     expect(@student_list).to all(respond_to :level)
+  end
+
+  it 'its level should be one of: Beginner, Pre-Intermediate, Intermediate, Upper-Intermediate or Advanced' do
     @student_list.each do |student|
       expect(student.level).to be_a String
       expect(VALID_LEVELS).to include(student.level)
     end
   end
 
-  it 'has valid timeslots' do
+  it 'should have timeslots' do
     expect(@student_list).to all(respond_to :timeslots)
+  end
+
+  it 'each of its timeslots should be a Timeslot' do
     @student_list.each do |student|
       expect(student.timeslots).to all(be_a Timeslot)
       expect(TIMESLOTS).to include(*student.timeslots)
@@ -189,6 +197,17 @@ describe '#allocate' do
       expect(student.allocated).to be false
       student.allocate
       expect(student.allocated).to be true
+    end
+  end
+end
+
+describe '#student?' do
+  include_context 'student instances'
+
+  it 'should let us check if its class is Student' do
+    @student_list.each do |student|
+      expect(student).to respond_to(:student?)
+      expect(student.student?).to eq(true)
     end
   end
 end

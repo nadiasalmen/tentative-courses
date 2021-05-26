@@ -14,19 +14,25 @@ end
 describe Timeslot do
   include_context 'timeslots instances'
 
-  it 'has a valid day' do
+  it 'has a day' do
     expect(@timeslot_list).to all(respond_to :day)
+  end
+
+  it 'its day should be one of: Monday, Tuesday, Wednesday, Thursday or Friday}' do
     @timeslot_list.each do |timeslot|
       expect(timeslot.day).to be_a String
       expect(VALID_DAYS).to include(timeslot.day)
     end
   end
 
-  it 'has a valid time' do
+  it 'has valid time' do
     expect(@timeslot_list).to all(respond_to :time)
+  end
+
+  it 'its time should be an Integer between 9 and 19' do
     @timeslot_list.each do |timeslot|
-      expect(timeslot.time).to be_a Integer
       expect(VALID_TIMES).to include(timeslot.time)
+      expect(timeslot.time).to be_a Integer
     end
   end
 
@@ -36,5 +42,16 @@ describe Timeslot do
 
   it 'raises InvalidValue if time is wrong' do
     expect { Timeslot.new(day: 'Monday', time: '') }.to raise_error(Timeslot::InvalidValue)
+  end
+end
+
+describe '#timeslot?' do
+  include_context 'timeslots instances'
+
+  it 'should let us check if its class is Timeslot' do
+    @timeslot_list.each do |timeslot|
+      expect(timeslot).to respond_to(:timeslot?)
+      expect(timeslot.timeslot?).to eq(true)
+    end
   end
 end
